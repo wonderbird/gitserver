@@ -22,19 +22,28 @@ ENV AUTHORIZED_KEYS # Please set the environment variable AUTHORIZED_KEYS when r
 
 EXPOSE 22/tcp
 
+RUN apk update
 RUN apk add --no-cache bash coreutils
-RUN apk add --no-cache git
+RUN apk add --no-cache git \
+    	    	       openssh
 
 #####
 # Set up the git user and the associated group
 #
-# The git user may not log in and has no password
+# docker-entrypoint.sh will configure the account and sshd such that the git
+# user can only log in with a key.
 #####
 RUN addgroup -S git \
-    && adduser -S -s /usr/bin/git-shell -g 'Manages git version control' -G git -D -h /home/git git \
+    && adduser -S -s /usr/bin/git-shell -g 'Manages git version control' -G git -h /home/git git \
     && mkdir /home/git/.ssh \
     && chown git:git /home/git/.ssh \
     && chmod 700 /home/git/.ssh
+
+#####
+# The git repositories shall be mounted to /opt/git
+#####
+
+RUN mkdir -p /opt/git
 
 #####
 # Setup and run the docker-entrypoint.sh script
