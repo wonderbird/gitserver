@@ -1,18 +1,21 @@
-# git server
+# An ssh server allowing users to push to a git repository.
 #
 # To run this container, please specify the AUTHORIZED_KEYS environment variable
 # on the command line. The docker-entrypoint.sh script will replace the file
 # /home/git/.ssh/authorized_keys with the contents of this environment variable.
 #
+# Further, mount a folder for the repositories to /opt/git in order to keep the
+# repositories when rebooting the container.
+#
 # Example:
-# $ docker run -it --rm --name git --env AUTHORIZED_KEYS=<some_keys> git
+# $ docker run -it --rm --name git --env AUTHORIZED_KEYS=<some_keys> -v /my/repo/folder:/opt/git gitserver
 #
 # If you would like to run the container and connect a shell to it, then you
 # can simply pass "/bin/sh" to the docker command line. This will instruct
 # docker-entrypoint.sh to run the "/bin/sh" command instead of /usr/bin/top.
 #
 # Example:
-# $ docker run -it --rm --name git --env AUTHORIZED_KEYS=<some_keys> git /bin/sh
+# $ docker run -it --rm --name git --env AUTHORIZED_KEYS=<some_keys> -v /my/repo/folder:/opt/git gitserver /bin/sh
 #
 FROM alpine:latest
 
