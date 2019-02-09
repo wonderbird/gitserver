@@ -21,7 +21,7 @@ sed -i '/#PasswordAuthentication/ s/yes/no/' /etc/ssh/sshd_config
 # Uncomment the PasswordAuthentication flag
 sed -i '/#PasswordAuthentication no/ s/#//' /etc/ssh/sshd_config
 
-echo "$AUTHORIZED_KEYS" >/home/git/.ssh/authorized_keys
+echo "$AUTHORIZED_KEYS" | sed 's/\\n/\n/g' >/home/git/.ssh/authorized_keys
 chown git.git /home/git/.ssh/authorized_keys
 chmod 600 /home/git/.ssh/authorized_keys
 
