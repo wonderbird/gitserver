@@ -8,14 +8,14 @@
 # repositories when rebooting the container.
 #
 # Example:
-# $ docker run -it --rm --name git --env AUTHORIZED_KEYS=<some_keys> -v /my/repo/folder:/opt/git gitserver
+# $ docker run -p 8022:22 -it --rm --name git --env AUTHORIZED_KEYS=<some_keys> -v /my/repo/folder:/opt/git gitserver
 #
 # If you would like to run the container and connect a shell to it, then you
 # can simply pass "/bin/sh" to the docker command line. This will instruct
 # docker-entrypoint.sh to run the "/bin/sh" command instead of /usr/bin/top.
 #
 # Example:
-# $ docker run -it --rm --name git --env AUTHORIZED_KEYS=<some_keys> -v /my/repo/folder:/opt/git gitserver /bin/sh
+# $ docker run -it --rm --name git gitserver /bin/sh
 #
 FROM alpine:latest
 
